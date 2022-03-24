@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:login_11/HomePage.dart';
 class page1 extends StatelessWidget {
 
@@ -20,7 +19,7 @@ class page1 extends StatelessWidget {
             SizedBox(height: 8),
             Text(user.uid!),
             Text(user.email!),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             ElevatedButton.icon(onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));

@@ -77,6 +77,9 @@ class LoginPage extends State<LoginWidget> {
                       ),
                       SizedBox(height: 23),
                       TextField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         controller: PasswordController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
@@ -135,7 +138,7 @@ class LoginPage extends State<LoginWidget> {
                 InkWell(
                  //pressioned
                  onTap: () {
-
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupPageWidget()));
                    },
                  child: Column(
                   children: [

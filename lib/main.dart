@@ -20,6 +20,7 @@ void main() async {
 }
 class MainPage extends StatelessWidget {
   @override
+
   Widget build( BuildContext context) => Scaffold(
     body: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),

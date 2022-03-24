@@ -1,11 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPageWidget extends StatefulWidget {
   @override
+  SignupPage createState() =>SignupPage();
+  }
+  class SignupPage extends State<SignupPageWidget> {
+  final EmailmyController = TextEditingController();
+  final PasswordController = TextEditingController();
+
   Widget build(BuildContext context) {
-    final myController = TextEditingController();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -62,6 +71,7 @@ class SignupPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextField(
+
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                       prefixIcon: Icon(Icons.mail),
@@ -72,21 +82,28 @@ class SignupPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                       prefixIcon: Icon(Icons.password),
                       border: OutlineInputBorder(),
                       hintText: 'Password',
                       label: Text("Password"),
+
                     ),
                   ),
                      SizedBox(height: 20),
                   Container(
                     child: TextField(
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
                      style: TextStyle(
                          color: Colors.black
                      ),
-                      controller: myController,
+                      controller: EmailmyController,
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                         prefixIcon: Icon(Icons.password),
@@ -114,7 +131,7 @@ class SignupPage extends StatelessWidget {
                   minWidth: double.infinity,
                   height: 50,
                   onPressed: () {
-                    print(myController.text);
+                    signUp();
 
                   },
                   color: Color(0xff0095FF),
@@ -164,6 +181,38 @@ class SignupPage extends StatelessWidget {
       ),
     );
   }
+
+  Future signUp() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = await FirebaseAuth.instance.currentUser;
+    try {
+
+     await auth.createUserWithEmailAndPassword(email: '4ss@email.com', password: 'passdsfdsdsfss').then((value) =>
+     {
+       FirebaseFirestore.instance.collection('users2').doc(value.user?.uid).set(
+           {
+             'name':'4ss@email.com',
+
+           }
+       )
+     });
+     print(user?.uid);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+
+
+
+  }
+
+
+
 }
 
 
