@@ -5,6 +5,7 @@ import '../theme/light_color.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/bottom_navigation_bar.dart';
 import '../widgets/title_text.dart';
+import 'HomePage.dart';
 
 class Pages_2 extends StatefulWidget {
 
@@ -22,7 +23,7 @@ class _Page2State extends State<Pages_2> {
         ),
         SizedBox(width: 15),
         TitleText(text: "Hello,"),
-        Text(' Janth,',
+        Text(' Ismail,',
             style: GoogleFonts.mulish(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -30,9 +31,12 @@ class _Page2State extends State<Pages_2> {
         Expanded(
           child: SizedBox(),
         ),
-        Icon(
-          Icons.short_text,
+        IconButton(
+          icon: new Icon(Icons.logout_outlined ),
           color: Theme.of(context).iconTheme.color,
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
         )
       ],
     );
@@ -45,7 +49,7 @@ class _Page2State extends State<Pages_2> {
         _icon(Icons.transfer_within_a_station, "Transfer"),
         _icon(Icons.phone, "Airtime"),
         _icon(Icons.payment, "Pay Bills"),
-        _icon(Icons.code, "Qr Pay"),
+        _icon(Icons.code, "My Qr"),
       ],
     );
   }
@@ -84,11 +88,16 @@ class _Page2State extends State<Pages_2> {
   }
 
   Widget _transectionList() {
-    return Column(
+    return
+      Column(
       children: <Widget>[
-        _transection("Flight Ticket", "23 Feb 2020"),
-        _transection("Electricity Bill", "25 Feb 2020"),
-        _transection("Flight Ticket", "03 Mar 2020"),
+        ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount:2,
+            itemBuilder: (context,index){
+              return  _transection('home', 'hola');
+            })
       ],
     );
   }
@@ -118,7 +127,7 @@ class _Page2State extends State<Pages_2> {
             color: LightColor.lightGrey,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          child: Text('-20 MLR',
+          child: Text('-22 MLR',
               style: GoogleFonts.mulish(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

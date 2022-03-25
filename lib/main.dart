@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'Screens/HomePage.dart';
 import 'Screens/page1.dart';
+import 'Screens/pages2.dart';
 
 
 
@@ -24,9 +25,9 @@ class MainPage extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context ,snapshot){
         if(snapshot.hasData){
-          return page1();
-        }else{
           return HomePage();
+        }else{
+          return Pages_2();
         }
       }
     ),

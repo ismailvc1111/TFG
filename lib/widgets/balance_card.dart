@@ -42,7 +42,7 @@ class BalanceCard extends StatelessWidget {
                               color: LightColor.yellow2),
                         ),
                         Text(
-                          ' MLR',
+                          ' EUR',
                           style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.w500,
