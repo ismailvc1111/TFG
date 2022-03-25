@@ -3,11 +3,9 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_11/page1.dart';
-import 'package:login_11/signup.dart';
+import 'Screens/HomePage.dart';
+import 'Screens/page1.dart';
 
-import 'HomePage.dart';
-import 'login.dart';
 
 
 void main() async {

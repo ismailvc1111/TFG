@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login_11/page1.dart';
-import 'package:login_11/signup.dart';
+import 'package:login_11/Screens/page1.dart';
+import 'package:login_11/Screens/pages2.dart';
+import 'package:login_11/Screens/signup.dart';
+
 class LoginWidget extends StatefulWidget {
   @override
   LoginPage createState() =>LoginPage();
@@ -15,11 +17,11 @@ class LoginPage extends State<LoginWidget> {
   @override
   final EmailmyController = TextEditingController();
   final PasswordController = TextEditingController();
- void dispose(){
-   EmailmyController.dispose();
-   PasswordController.dispose();
-   super.dispose();
- }
+  void dispose(){
+    EmailmyController.dispose();
+    PasswordController.dispose();
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +36,8 @@ class LoginPage extends State<LoginWidget> {
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back_ios,
-          size: 20,
-          color: Colors.black,),
+            size: 20,
+            color: Colors.black,),
 
 
         ),
@@ -52,12 +54,12 @@ class LoginPage extends State<LoginWidget> {
                 Column(
                   children: <Widget>[
                     Text("Login",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
                     SizedBox(height: 20,),
                     Text("Login to your account",
-                    style: TextStyle(
-                      fontSize: 15,
-                    color:Colors.grey[700]),)
+                      style: TextStyle(
+                          fontSize: 15,
+                          color:Colors.grey[700]),)
                   ],
                 ),
                 Padding(
@@ -92,77 +94,77 @@ class LoginPage extends State<LoginWidget> {
                     ],
                   ),
                 ),
-                  Padding(padding:
-                  EdgeInsets.symmetric(horizontal: 40),
+                Padding(padding:
+                EdgeInsets.symmetric(horizontal: 40),
                   child: Container(
-                      padding: EdgeInsets.only(top: 3, left: 3),
-                      decoration:
-                        BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border(
-                            bottom: BorderSide(color: Colors.black),
-                            top: BorderSide(color: Colors.black),
-                            left: BorderSide(color: Colors.black),
-                            right: BorderSide(color: Colors.black),
+                    padding: EdgeInsets.only(top: 3, left: 3),
+                    decoration:
+                    BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border(
+                          bottom: BorderSide(color: Colors.black),
+                          top: BorderSide(color: Colors.black),
+                          left: BorderSide(color: Colors.black),
+                          right: BorderSide(color: Colors.black),
 
-                          )
+                        )
 
 
 
-                        ),
-                      child: MaterialButton(
-                        minWidth: double.infinity,
-                        height: 50,
-                        onPressed: () {
-                         signIn();
+                    ),
+                    child: MaterialButton(
+                      minWidth: double.infinity,
+                      height: 50,
+                      onPressed: () {
+                        signIn();
 
-                        },
-                        color: Color(0xff0095FF),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-
-                        ),
-                        child: Text(
-                          "Login", style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Colors.white,
-
-                        ),
-                        ),
+                      },
+                      color: Color(0xff0095FF),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
 
                       ),
+                      child: Text(
+                        "Login", style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.white,
+
+                      ),
+                      ),
+
                     ),
                   ),
+                ),
                 InkWell(
-                 //pressioned
-                 onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupPageWidget()));
-                   },
-                 child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Don't have an account?"),
-                        Text(" Sign up", style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                  //pressioned
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupPageWidget()));
+                  },
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("Don't have an account?"),
+                          Text(" Sign up", style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
 
-                        ),)
-                      ],
-                    ),
-                  ],
-                ),),
+                          ),)
+                        ],
+                      ),
+                    ],
+                  ),),
 
                 Container(
                   padding: EdgeInsets.only(top: 100),
                   height: 200,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/background.png"),
-                      fit: BoxFit.fitHeight
+                        image: AssetImage("assets/background.png"),
+                        fit: BoxFit.fitHeight
                     ),
 
                   ),
@@ -181,14 +183,14 @@ class LoginPage extends State<LoginWidget> {
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: EmailmyController.text.trim(), password: PasswordController.text.trim());
-        FirebaseAuth.instance
+    FirebaseAuth.instance
         .authStateChanges()
         .listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (BuildContext context) => page1()));
+            context, MaterialPageRoute(builder: (BuildContext context) => Pages_2()));
       }
     });
 
@@ -207,9 +209,9 @@ Widget inputFile({label, obscureText = false, controller})
       Text(
         label,
         style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-          color:Colors.black87
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color:Colors.black87
         ),
 
       ),
@@ -219,17 +221,17 @@ Widget inputFile({label, obscureText = false, controller})
       TextField(
         obscureText: obscureText,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0,
-          horizontal: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey[400]!
-            ),
+            contentPadding: EdgeInsets.symmetric(vertical: 0,
+                horizontal: 10),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: Colors.grey[400]!
+              ),
 
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[400]!)
-          )
+            ),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400]!)
+            )
         ),
       ),
       SizedBox(height: 10,)

@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:login_11/Screens/page1.dart';
 
+import 'HomePage.dart';
 import 'login.dart';
 
 class SignupPageWidget extends StatefulWidget {
@@ -12,7 +14,8 @@ class SignupPageWidget extends StatefulWidget {
   class SignupPage extends State<SignupPageWidget> {
   final EmailmyController = TextEditingController();
   final PasswordController = TextEditingController();
-
+  final ConfirmpassController = TextEditingController();
+  final NameController = TextEditingController();
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -61,17 +64,18 @@ class SignupPageWidget extends StatefulWidget {
               Column(
                 children: <Widget>[
                   TextField(
+                    controller: NameController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.account_box_outlined),
-                      hintText: 'UserName',
-                      label: Text("UserName"),
+                      hintText: 'Name',
+                      label: Text("Name"),
                     ),
                   ),
                   SizedBox(height: 20),
                   TextField(
-
+                    controller: EmailmyController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                       prefixIcon: Icon(Icons.mail),
@@ -82,6 +86,7 @@ class SignupPageWidget extends StatefulWidget {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    controller: PasswordController,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
@@ -103,7 +108,7 @@ class SignupPageWidget extends StatefulWidget {
                      style: TextStyle(
                          color: Colors.black
                      ),
-                      controller: EmailmyController,
+                      controller: ConfirmpassController,
                       decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                         prefixIcon: Icon(Icons.password),
@@ -187,14 +192,21 @@ class SignupPageWidget extends StatefulWidget {
     User? user = await FirebaseAuth.instance.currentUser;
     try {
 
-     await auth.createUserWithEmailAndPassword(email: '4ss@email.com', password: 'passdsfdsdsfss').then((value) =>
+     await auth.createUserWithEmailAndPassword(email: EmailmyController.text.trim(), password: PasswordController.text.trim()).then((value) =>
      {
        FirebaseFirestore.instance.collection('users2').doc(value.user?.uid).set(
            {
-             'name':'4ss@email.com',
+             'name': NameController.text.trim(),
+             'Email':EmailmyController.text.trim(),
+             'account': 0,
 
            }
-       )
+
+       ),
+       Navigator.push(context, MaterialPageRoute(builder: (context) => page1())),
+
+
+
      });
      print(user?.uid);
     } on FirebaseAuthException catch (e) {

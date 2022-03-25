@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:login_11/HomePage.dart';
+
+import 'HomePage.dart';
+
 class page1 extends StatelessWidget {
 
   @override
