@@ -203,7 +203,7 @@ class SignupPageWidget extends StatefulWidget {
            }
 
        ),
-       Navigator.push(context, MaterialPageRoute(builder: (context) => page1())),
+       Navigator.push(context, MaterialPageRoute(builder: (context) => Pages1())),
 
 
 
