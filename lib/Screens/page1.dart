@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 import '../theme/light_color.dart';
 import '../widgets/balance_card.dart';
@@ -46,20 +47,28 @@ class _page1 extends State<Pages1> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        _icon(Icons.transfer_within_a_station, "Transfer"),
-        _icon(Icons.phone, "Airtime"),
-        _icon(Icons.payment, "Pay Bills"),
-        _icon(Icons.code, "My Qr"),
+        _icon(Icons.transfer_within_a_station, "Transfer" , 0),
+        _icon(Icons.phone, "Airtime" ,1),
+        _icon(Icons.payment, "Pay Bills",2),
+        _icon(Icons.code, "My Qr",3),
       ],
     );
   }
 
-  Widget _icon(IconData icon, String text) {
+  Widget _icon(IconData icon, String text , int index) {
+    var qr = 'qrr';    
     return Column(
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/transfer');
+            if (index == 3){
+             showDialog(context: context, builder: (context){
+               return AlertDialog(
+                 title: BarcodeWidget(data:qr, barcode: Barcode.qrCode() ),
+               );
+             });
+          }
+
           },
           child: Container(
             height: 80,
@@ -75,6 +84,7 @@ class _page1 extends State<Pages1> {
                       blurRadius: 10)
                 ]),
             child: Icon(icon),
+
           ),
         ),
         Text(text,

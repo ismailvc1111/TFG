@@ -28,6 +28,18 @@ class AppTheme {
   static TextStyle h4Style = const TextStyle(fontSize: 18);
   static TextStyle h5Style = const TextStyle(fontSize: 16);
   static TextStyle h6Style = const TextStyle(fontSize: 14);
-}
 
+}
+final kTitleStyle = TextStyle(
+  color: Colors.white,
+  fontFamily: 'CM Sans Serif',
+  fontSize: 26.0,
+  height: 1.5,
+);
+
+final kSubtitleStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 18.0,
+  height: 1.2,
+);
   

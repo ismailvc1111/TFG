@@ -6,6 +6,7 @@ import 'package:login_11/Screens/page1.dart';
 
 import 'HomePage.dart';
 import 'login.dart';
+import 'onboarding/onboarding.dart';
 
 class SignupPageWidget extends StatefulWidget {
   @override
@@ -203,7 +204,7 @@ class SignupPageWidget extends StatefulWidget {
            }
 
        ),
-       Navigator.push(context, MaterialPageRoute(builder: (context) => Pages1())),
+       Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingScreen())),
 
 
 
