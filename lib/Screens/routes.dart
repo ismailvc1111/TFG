@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_11/Screens/page1.dart';
 import 'package:login_11/Screens/page3.dart';
+import 'package:login_11/Screens/profile/profile.dart';
 
 class routes extends StatelessWidget {
   final int index ;
@@ -10,7 +11,8 @@ class routes extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> mylist =[
       Pages1(),
-      page4()
+      page4(),
+      EditProfilePage()
     ];
 
     return mylist[index];
