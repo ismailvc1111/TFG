@@ -1,4 +1,4 @@
-# TechWallet
+# Walletish
 
 A new Flutter project.
 
