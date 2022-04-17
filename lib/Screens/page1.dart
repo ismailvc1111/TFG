@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import '../theme/light_color.dart';
+import '../transfer.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/bottom_navigation_bar.dart';
 import '../widgets/title_text.dart';
@@ -15,6 +18,8 @@ class Pages1 extends StatefulWidget {
   _page1 createState() => _page1();
 }
 class _page1 extends State<Pages1> {
+  var qrsc = "Escaneame";
+
   Widget _appBar() {
     return Row(
       children: <Widget>[
@@ -36,6 +41,7 @@ class _page1 extends State<Pages1> {
           icon: new Icon(Icons.logout_outlined ),
           color: Theme.of(context).iconTheme.color,
           onPressed: () {
+             FirebaseAuth.instance.signOut();
             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
           },
         )
@@ -60,7 +66,11 @@ class _page1 extends State<Pages1> {
     return Column(
       children: <Widget>[
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            if(index == 2){
+              scaQr();
+
+            }
             if (index == 3){
              showDialog(context: context, builder: (context){
                return AlertDialog(
@@ -68,6 +78,9 @@ class _page1 extends State<Pages1> {
                );
              });
           }
+            if(index==1) {
+              _callNumber();
+            }
 
           },
           child: Container(
@@ -97,16 +110,22 @@ class _page1 extends State<Pages1> {
     );
   }
   Widget _transectionList() {
+    final titles = ["List 1", "List 2", "List 3"];
+    final subtitles = [
+      "Here is list 1 subtitle",
+      "Here is list 2 subtitle",
+      "Here is list 3 subtitle"
+    ];
     return
       Column(
         children: <Widget>[
           ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount:2,
+              itemCount:titles.length,
               itemBuilder: (context,index){
 
-                return  _transection('home', 'hola');
+                return  _transection(titles[index], 'hola');
               })
         ],
       );
@@ -185,4 +204,28 @@ class _page1 extends State<Pages1> {
                     ],
                   )),
             )));
-  }}
+  }
+  Future <void>scaQr()  async{
+    try{
+      FlutterBarcodeScanner.scanBarcode('#2A99C', 'cancel', true, ScanMode.QR).then((value){
+        setState(() {
+          qrsc=value;
+
+        });
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(id: qrsc,)));
+      } );
+    }catch(e){
+      setState(() {
+        qrsc = 'error';
+      });
+    }
+  }
+
+  _callNumber() async{
+    const number = '08592119XXXX'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+
+
+}

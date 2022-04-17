@@ -21,7 +21,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.green,
+              color: Colors.blue,
             ),
             onPressed: () {},
           ),
@@ -29,7 +29,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             IconButton(
               icon: Icon(
                 Icons.settings,
-                color: Colors.green,
+                color: Colors.blue,
               ),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -89,7 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 width: 4,
                                 color: Theme.of(context).scaffoldBackgroundColor,
                               ),
-                              color: Colors.green,
+                              color: Colors.blue,
                             ),
                             child: Icon(
                               Icons.edit,
@@ -125,7 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                     RaisedButton(
                       onPressed: () {},
-                      color: Colors.green,
+                      color: Colors.blue,
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       elevation: 2,
                       shape: RoundedRectangleBorder(

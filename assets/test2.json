@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "wallet-76447",
+  "private_key_id": "f4508ebb97d99b9dc9f019cd5a9b55d3fec3b9ec",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC3vh4OX1OtSKWK\nq5zh4UJV+/x6StHhwQAeV31U/besaXRUwK91L5vhH4YJhwCQ0JphDjoWOOH/vko+\nrAoTzV7Y2M53MWIU4K6IjLcfj3vwOhTD6E4MtZ8sUNocQYkisxqWIHptkZ3noJ0n\nHsOOOWGuuacOzyptvZRnQfS1IeNBG4i8EmbCw1DBBvXUGe24osDtwPh59mh6pCLO\nuBrGrW3mHIygZkcdFd66knN4lXp8RepkvHYR7gxE6aTCbX1HPRfqYuj7yILzQJMA\nzKWeWrfez8fmuFI1wOmMWYC3HJXXy/cRvdoXXP0jgGtnCvp+y2bjozLncaSQcRap\nH5s8eHRXAgMBAAECggEANRwH1gGpzxmDd+yYwRV6Nh5K4RJFTiqaHSsOuAVKFNS6\nYlD7pjSnqs+Qz6os+K7DILCbC5dPg7t9/FV/6C9hbe5k50Dn577109RQjhfMLCit\nnd7EyJmqs4V/NdGfkN8SHTiwCoGfkbb0Fb2nqrFdUcKpzfcFfYjhn2MKF1z/Me8E\n7sSp5mP5hvmH7vKUHdde6W2zwPiKIOvuN5X1WPucMpCqJHhZktliAPnPA2HzZJyf\n/nQ6O4gTkdXdVw3acAF331gDCgf+P+BlOgzLEgl6QcZqEHIP8W+jDBelzbOXLLn/\nmeoiuTJCy1Xx8+3bhGAlPdC2usJH/MDBVW5+Hxb+SQKBgQDkjYqSe2Ra60yyr8Uy\nw/azCq2qMUIWO/RZuDpeWeYQaK5oKeOAp/dI163h1NGJKXj/u7n3b9m2+2LTnMGx\n9ImvVOt95rdBlxijLUGBAxQnY0iKak25pDluemMAiiy9jl4Z7x+Q+cRfhcMZsvTR\nYcPyoRO3+qcSBb06F/0qt2/3QwKBgQDNzvajCD9n2ucajV7BycxiNHoQxYt63MZ5\nWNENWVGgds9lDyJFAITxuWEyfzkx9FJ/IF1Jl9FlVG0+5bSjsA7xKUJ24S+T01e/\nrsHtlDNGjml/XqgGwboEdZ70+WpTc4KXF5ggxWqBWZBTjn4XrUjXVVUT7Tk+bcWo\nnZ+/3glLXQKBgHqJTI9GqsJ4P1HaHU8fc6gAhKWn7TfAgzyLIngtmMSZa1CbjMcQ\nxur9/9MBaCoy2xW5T3ZTOJX7Z7vu4oaHhj5DuFJzHTOEUAhEnkcOIIMRnvXfErcC\nTmxmH6hNbLlgmCEtbG4tC1TvgW/I26ta0FTIear9Lw/hldeMvwZk/RnDAoGAHCwH\ncNuxKjs5xVWysd44vvyl9OPFqwTLmlLBEw218bwxuYivzTg7+obAulPV9XOXU1WP\nz4IbpL5A0gpJhtqTwQk/0twSUi7s5Q07+JR/zFm0MT44y+v61Z9wKeJ2XoQCTUJq\njZnYcWpcKkPoGL+cp/VDVx3y5wvJscIZ2v6+0PUCgYAJg5dRZ7J6PdecG/nW6Pal\n7fMakUfjopSTdsbV95/BBwfBNiOU5DFOHrH0bxVJx+8tpsGF7uUrQqh1/ndzviU3\nAHncLWFfU7FYc7xukmpTNJYBQO7/zSIzJCMaUP/iZ6ghYiDGQ8bI58PM18+VsEHR\nGw+ifqm2YHSswH75mdr4Fw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialog1234@wallet-76447.iam.gserviceaccount.com",
+  "client_id": "108014022274947131961",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialog1234%40wallet-76447.iam.gserviceaccount.com"
+}

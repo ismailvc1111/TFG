@@ -26,7 +26,7 @@ class _qr_pageState extends State<qr_page> {
           children: [
             Text(qrsc,style: TextStyle(color: Colors.blue,fontSize: 30),),
             ElevatedButton(onPressed: (){
-
+              scaQr();
             }, child: Text('Scanner')),
             SizedBox()
 
