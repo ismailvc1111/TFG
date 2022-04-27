@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 ![image](https://github.com/ismailvc1111/TFG/blob/master/s1.png)
 ![image](https://github.com/ismailvc1111/TFG/blob/master/s2.png)
-![image](https://i.ibb.co/LQ0YRvs/Captura-de-pantalla-de-2022-04-01-09-34-22.png)
+![image](https://i.ibb.co/xYrJPLV/Captura-de-pantalla-de-2022-04-27-23-13-43.png)
