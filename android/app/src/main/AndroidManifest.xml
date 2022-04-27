@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.login_11">
+    <uses-permission android:name="android.permission.CAMERA"/>
    <application
         android:label="login_11"
         android:name="${applicationName}"

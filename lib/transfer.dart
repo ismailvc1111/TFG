@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_11/widgets/title_text.dart';
 
@@ -14,6 +15,7 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   var selectedCard = 'WEIGHT';
   late TextEditingController _controller;
    int total = 0;
@@ -104,6 +106,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         onTap: (){
                           print('tester');
                           Read();
+                          Transfer();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -197,25 +200,37 @@ class _DetailsPageState extends State<DetailsPage> {
         )
     );
   }
-
+//--------------------------------------------------------transferenciade datos --------------------------------------------------------------------------------------------
   Future <void>Read() async{
 
+
+  }
+
+
+
+
+
+  //=---------------------------------------------Receptor---------------------------------------------
+  Future <void>Transfer()  async{
+    User? user = await FirebaseAuth.instance.currentUser;
+    CollectionReference users = FirebaseFirestore.instance.collection('users2');
+    print(user?.uid);
     DocumentReference  document= FirebaseFirestore.instance
         .collection('users2')
         .doc('1aI6vk825QRIkaJMhOz48IrhxHz2');
     document.get().then(( value) {
+
       print(value['account']);
       total= value['account'];
-      print(total);
+      //-----------------------------------------------------------------
+      users
+          .doc('1aI6vk825QRIkaJMhOz48IrhxHz2')
+          .update({'account': total + 10})
+          .then((value) => print("User Updated"))
+          .catchError((error) => print("Failed to update user: $error"));
+
     });
-  }
-  Future <void>Transfer()  async{
-    CollectionReference users = FirebaseFirestore.instance.collection('users2');
-    return users
-        .doc('1aI6vk825QRIkaJMhOz48IrhxHz2')
-        .update({'account': 10})
-        .then((value) => print("User Updated"))
-        .catchError((error) => print("Failed to update user: $error"));
+    return print('Succes');
 
 
   }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,13 +20,15 @@ class Pages1 extends StatefulWidget {
 }
 class _page1 extends State<Pages1> {
   var qrsc = "Escaneame";
+  User? user =  FirebaseAuth.instance.currentUser;
+  CollectionReference users = FirebaseFirestore.instance.collection('users2');
 
   Widget _appBar() {
     return Row(
       children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(
-              "https://cdn-images.motor.es/image/s/235w157h/fotos-coches/2022/mar/21143023/alfa-romeo-giulia-20-gasolina-206kw-280cv-veloce-q4-21143023_1648184046_1.jpg"),
+              "https://i.ibb.co/RQr3dZy/Logotipo-exported-Archivo-Logotipo-Pinchaaqui-2x-1-png.png" ),
         ),
         SizedBox(width: 15),
         TitleText(text: "Hello,"),
@@ -68,7 +71,7 @@ class _page1 extends State<Pages1> {
         GestureDetector(
           onTap: () async {
             if(index == 2){
-              scaQr();
+             await scaQr();
 
             }
             if (index == 3){
@@ -173,7 +176,7 @@ class _page1 extends State<Pages1> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children:<Widget>[
                       SizedBox(height: 35),
                       _appBar(),
                       SizedBox(
@@ -183,6 +186,7 @@ class _page1 extends State<Pages1> {
                       SizedBox(
                         height: 20,
                       ),
+
                       BalanceCard(),
                       SizedBox(
                         height: 50,
@@ -207,7 +211,7 @@ class _page1 extends State<Pages1> {
   }
   Future <void>scaQr()  async{
     try{
-      FlutterBarcodeScanner.scanBarcode('#2A99C', 'cancel', true, ScanMode.QR).then((value){
+     await FlutterBarcodeScanner.scanBarcode('#000000', 'cancel', true, ScanMode.BARCODE).then((value){
         setState(() {
           qrsc=value;
 
