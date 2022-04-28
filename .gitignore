@@ -30,7 +30,10 @@
 .pub-cache/
 .pub/
 /build/
-
+assets/wallet.json
+assets/wallet-76447-9c6bf8c22701.json
+assets/test2.json
+assets/testt.json
 # Web related
 lib/generated_plugin_registrant.dart
 
