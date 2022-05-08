@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../theme/theme.dart';
+import '../pages2.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Color(0xFF3594DD),
                 Color(0xFF4563DB),
                 Color(0xFF5036D5),
-                Color(0xFF5B16D0),
+                Color(0xFF395FE0),
               ],
             ),
           ),
@@ -61,7 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: () => print('Skip'),
+                    onPressed: () => Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (BuildContext context) => Pages_2())),
                     child: Text(
                       'Skip',
                       style: TextStyle(
@@ -98,12 +100,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Connect people\naround the world',
+                              'Safety & Security',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Every transaction is secured by trusted technology. Contact-free payment options also eliminate the chance of virus transmission, protecting the health and safety of your customers.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -125,12 +127,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Accessibility',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'We are building an inclusive digital ecosystem accessible to everyone.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -152,12 +154,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Get a new experience\nof imagination',
+                              'Growth & Opportunities',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Our solutions help your business thrive. Smart e-commerce, rapid digital transformation, and powerful data-driven marketing capabilities enable you to grow your business like never before.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -215,7 +217,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         color: Colors.white,
         child: GestureDetector(
-          onTap: () => print('Get started'),
+          onTap: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (BuildContext context) => Pages_2())),
           child: Center(
             child: Padding(
               padding: EdgeInsets.only(bottom: 30.0),

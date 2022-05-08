@@ -1,29 +1,50 @@
-
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:login_11/widgets/title_text.dart';
 
+import '../page1.dart';
+import '../pages2.dart';
 class DetailsPage extends StatefulWidget {
   final String id ;
   DetailsPage({required this.id });
-
-
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }
-
 class _DetailsPageState extends State<DetailsPage> {
+  //-----------------------------------------
   FirebaseAuth auth = FirebaseAuth.instance;
+  RegExp digitValidator  = RegExp("[0-9]+");
+  bool isANumber = true;
   var selectedCard = 'WEIGHT';
-  late TextEditingController _controller;
-   int total = 0;
+  late TextEditingController _controllerDestino;
+  late TextEditingController _controllereuro;
+  late TextEditingController _controllerDesc;
+   int totalDestino = 0;
+   int totalOrigen =0;
   final int foodPrice=2;
+  ////setsTransaccions
+  List<dynamic> setsDestino = [];
+  List<dynamic> setsOrigen = [];
+  //Descriptionoftransaction
+  List<dynamic> setsDestino_Desc = [];
+  List<dynamic> setsOrigen_Desc = [];
+  User? user =  FirebaseAuth.instance.currentUser;
+
+  //---------------------------------------
   @override
   void initState() {
     super.initState();
-    _controller = new TextEditingController(text: widget.id);
+    _controllerDestino = new TextEditingController(text: widget.id);
+    _controllereuro = new TextEditingController();
+    _controllerDesc = new TextEditingController();
+  }void setValidator(valid) {
+    setState(() {
+      isANumber = valid;
+    });
   }
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,13 +111,33 @@ class _DetailsPageState extends State<DetailsPage> {
                       prefixText: "Id -",
 
                     ),
-                   controller: _controller ),
+                   controller: _controllerDestino ),
                     SizedBox(height: 40.0),
                     TextField(decoration: InputDecoration(
-                      labelText: "Id",
-                      prefixText: "Id -",
+                      labelText: "Description",
+                      prefixText: "",
 
-                    )),
+                    ),
+                        controller: _controllerDesc ) ,
+                    SizedBox(height: 40.0),
+                    TextField(onChanged: (inputValue){
+                      if(inputValue.isEmpty || digitValidator.hasMatch(inputValue)){
+                        setValidator(true);
+                      } else{
+                        setValidator(false);
+                      }
+                    },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                      errorText: isANumber ? null : "Please enter a Mount",
+                      labelText: "Mount",
+                      prefixText: "Eur-",
+                    ),
+                   controller: _controllereuro),
+
                     SizedBox(height: 20.0),
                     //Ttextfield
                     SizedBox(height: 20.0),
@@ -104,9 +145,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       padding: EdgeInsets.only(bottom:5.0),
                       child: GestureDetector(
                         onTap: (){
-                          print('tester');
-                          Read();
+
                           Transfer();
+
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -200,43 +241,146 @@ class _DetailsPageState extends State<DetailsPage> {
         )
     );
   }
-//--------------------------------------------------------transferenciade datos --------------------------------------------------------------------------------------------
-  Future <void>Read() async{
-
-
-  }
-
-
-
-
 
   //=---------------------------------------------Receptor---------------------------------------------
   Future <void>Transfer()  async{
-    User? user = await FirebaseAuth.instance.currentUser;
+
     CollectionReference users = FirebaseFirestore.instance.collection('users2');
     print(user?.uid);
     DocumentReference  document= FirebaseFirestore.instance
         .collection('users2')
         .doc('1aI6vk825QRIkaJMhOz48IrhxHz2');
-    document.get().then(( value) {
-
-      print(value['account']);
-      total= value['account'];
-      //-----------------------------------------------------------------
+    DocumentReference  documentOrigin= FirebaseFirestore.instance
+        .collection('users2')
+        .doc('${user?.uid}');
+   //----------------------Origin----------------------------------------
+    if(await boolCheckDestino()==true){
+      ListTRansferD();
+     await ListTRansferO();
+      ListDescD();
+     await  ListDescO();
+    documentOrigin.get().then(( value) {
+      totalOrigen= value['account'];
       users
-          .doc('1aI6vk825QRIkaJMhOz48IrhxHz2')
-          .update({'account': total + 10})
-          .then((value) => print("User Updated"))
+          .doc('${user?.uid}')
+          .update({'account':totalOrigen - int. parse(_controllereuro.text.trim()), "Transacciones ": setsOrigen ,"Desc": setsOrigen_Desc})
+
+          .then((value) => {
+
+      })
           .catchError((error) => print("Failed to update user: $error"));
 
     });
-    return print('Succes');
+    //-----------------Destino-------------------------------------------
+    document.get().then((value) {
+      totalDestino= value['account'];
+      users
+          .doc('1aI6vk825QRIkaJMhOz48IrhxHz2')
+          .update({'account':totalDestino + int.parse(_controllereuro.text.trim()), "Transacciones ": setsDestino,"Desc": setsDestino_Desc})
+          .then((value) => checkConnection(2))
+          .catchError((error) => print("Failed to update user: $error"));
 
+    });
+    }else{
+      checkConnection(2);
+    }
+    return print('Succes');
+  }
+
+  Future<List> ListTRansferD() async {
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '1aI6vk825QRIkaJMhOz48IrhxHz2')
+        .get();
+    setsDestino= snapshot.docs.first['Transacciones '];
+
+    setsDestino.add(int.parse(_controllereuro.text.trim()));
+
+    return setsDestino;
+  }
+  Future<List> ListDescD() async {
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '1aI6vk825QRIkaJMhOz48IrhxHz2')
+        .get();
+    setsDestino_Desc= snapshot.docs.first['Desc'];
+    setsDestino_Desc.add(_controllerDesc.text.trim());
+
+    return setsDestino_Desc;
+  }
+  Future<List> ListDescO() async {
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '${user?.uid}')
+        .get();
+    setsOrigen_Desc= snapshot.docs.first['Desc'];
+    setsOrigen_Desc.add(_controllerDesc.text.trim());
+
+    return setsOrigen_Desc;
+  }
+ Future<bool> boolCheckDestino() async {
+
+    final snapshotOrigen = await  FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '1aI6vk825QRIkaJMhOz48IrhxHz2').get();
+    if(await snapshotOrigen.docs.first['uid']=='1aI6vk825QRIkaJMhOz48IrhxHz2'){
+      print(snapshotOrigen.docs.first['uid']+'gggg');
+      return true ;
+    }
+
+    return false ;
 
   }
+  Future<List> ListTRansferO() async {
+    final snapshotOrigen = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '${user?.uid}')
+        .get();
+    setsOrigen= snapshotOrigen.docs.first['Transacciones '];
+    setsOrigen.add(-1 * int.parse(_controllereuro.text.trim()));
+    return setsOrigen;
+  }
+
+
   selectCard(cardTitle) {
     setState(() {
       selectedCard = cardTitle;
     });
   }
-}
+  checkConnection(int i ) async {
+    if(i==1) {
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        title: 'No Succes',
+        desc: 'Scan the code again',
+        btnOkOnPress: () {},
+      )
+        ..show();
+    }
+    else{
+      return AwesomeDialog(
+          context: context,
+          dialogType: DialogType.SUCCES,
+          animType: AnimType.RIGHSLIDE,
+          title: 'Succes',
+
+        btnCancelOnPress: () {
+          Navigator.pop(context);
+        },
+        btnOkOnPress: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (BuildContext context) => Pages_2()));
+        },
+      )..show();
+    }
+
+
+
+
+
+}}

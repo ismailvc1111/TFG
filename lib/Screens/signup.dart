@@ -200,6 +200,7 @@ class SignupPageWidget extends StatefulWidget {
              'name': NameController.text.trim(),
              'Email':EmailmyController.text.trim(),
              'account': 0,
+             'uid': user?.uid
 
            }
 

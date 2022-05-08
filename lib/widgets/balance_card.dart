@@ -50,7 +50,7 @@ class _BalanceCardState extends State<BalanceCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Total Balance,',
+                        'Total Balance',
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -77,26 +77,7 @@ class _BalanceCardState extends State<BalanceCard> {
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Eq:',
-                            style: GoogleFonts.mulish(
-                                textStyle: Theme.of(context).textTheme.headline4,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: LightColor.lightNavyBlue),
-                          ),
-                          Text(
-                            ' \$10,000',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
+
                       SizedBox(
                         height: 10,
                       ),

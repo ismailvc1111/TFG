@@ -9,8 +9,17 @@ class page4 extends StatefulWidget {
 class _page4State extends State<page4> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Page4"),
+    return Scaffold(
+
+      body: Container(
+        
+        child: Center(child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          Icon(Icons.notifications_off_outlined, size: 40),
+          Text('No notification')
+        ])),
+      ),
     );
   }
 }

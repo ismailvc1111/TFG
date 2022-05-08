@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_11/transfer.dart';
+import 'package:login_11/Screens/transfer/transfer.dart';
 import 'Screens/HomePage.dart';
 import 'Screens/chatbot/chat2.dart';
 import 'Screens/chatbot/chatbot.dart';
