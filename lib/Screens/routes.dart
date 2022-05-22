@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_11/Screens/page1.dart';
 import 'package:login_11/Screens/page3.dart';
-import 'package:login_11/Screens/profile/profile.dart';
-
-import 'chatbot/chatbot.dart';
+import 'Chatbot/chatbot.dart';
+import 'Profile/profile.dart';
 
 class routes extends StatelessWidget {
   final int index ;

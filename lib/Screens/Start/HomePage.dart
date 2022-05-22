@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:login_11/Screens/signup.dart';
+import 'package:login_11/Screens/Start/Signup.dart';
 
-import 'login.dart';
+import 'Login.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -1,12 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:login_11/Screens/page1.dart';
-
-import 'HomePage.dart';
-import 'login.dart';
-import 'onboarding/onboarding.dart';
+import 'package:intl/intl.dart';
+import 'Login.dart';
+import '../Onboarding/Onboarding.dart';
 
 class SignupPageWidget extends StatefulWidget {
   @override
@@ -192,7 +190,10 @@ class SignupPageWidget extends StatefulWidget {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = await FirebaseAuth.instance.currentUser;
     try {
-
+      List<dynamic> pLikeduserId = [];
+      final now = new DateTime.now();
+      String formatter = DateFormat('yMd').format(now);
+      pLikeduserId.add(formatter);
      await auth.createUserWithEmailAndPassword(email: EmailmyController.text.trim(), password: PasswordController.text.trim()).then((value) =>
      {
        FirebaseFirestore.instance.collection('users2').doc(value.user?.uid).set(
@@ -200,32 +201,89 @@ class SignupPageWidget extends StatefulWidget {
              'name': NameController.text.trim(),
              'Email':EmailmyController.text.trim(),
              'account': 0,
-             'uid': user?.uid
+             'uid': value.user!.uid,
+             'Fecha':pLikeduserId,
+             'Desc': pLikeduserId,
+             'Transacciones ':pLikeduserId
 
-           }
-
-       ),
+           }),
        Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingScreen())),
 
 
 
+
+
      });
+     //-----------------------------------------------
      print(user?.uid);
+
+
+      //---------------------------------------------------------------
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        checkConnection(1,'Weak Password','The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        checkConnection(2,'Email Already In Use','The password provided is too weak.');
       }
     } catch (e) {
       print(e);
+      checkConnection(3 , 'Error' ,e.toString() );
+
     }
 
 
 
   }
+//alert---------------------------------------
+  checkConnection(int i , String title ,String error ) async {
+    if(i==1) {
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        title: title,
+        desc: error,
+        btnOkColor: Color(0xff0095FF),
+        btnOkOnPress: () {},
+      )
+        ..show();
+    }else if(i == 3) {
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        btnOkColor: Color(0xff0095FF),
+        title: title,
+        desc: error,
 
 
+        btnOkOnPress: () {
+        },
+      )..show();
+
+    }
+    else{
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        btnOkColor: Color(0xff0095FF),
+        title: title,
+        desc: error,
+
+        btnCancelOnPress: () {
+          Navigator.pop(context);
+        },
+        btnOkOnPress: () {
+        },
+      )..show();
+    }
+
+
+
+
+
+  }
 
 }
 

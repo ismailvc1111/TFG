@@ -6,13 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-
-import '../theme/light_color.dart';
-import 'transfer/transfer.dart';
-import '../widgets/balance_card.dart';
-import '../widgets/bottom_navigation_bar.dart';
-import '../widgets/title_text.dart';
-import 'HomePage.dart';
+import '../Theme/light_color.dart';
+import 'Transfer/manual.dart';
+import 'Transfer/transfer.dart';
+import '../Widgets/balance_card.dart';
+import '../Widgets/title_text.dart';
+import 'Start/HomePage.dart';
 
 class Pages1 extends StatefulWidget {
   @override
@@ -20,8 +19,9 @@ class Pages1 extends StatefulWidget {
 }
 class _page1 extends State<Pages1> {
   var qrsc = "Escaneame";
- late int lenght = 0;
-  User? user =  FirebaseAuth.instance.currentUser;
+ late int lenght = 1;
+ late String name = "" ;
+ User? user =  FirebaseAuth.instance.currentUser;
   CollectionReference users = FirebaseFirestore.instance.collection('users2');
   Future<int> getUserNameFromUID() async {
     print('testtt');
@@ -31,10 +31,24 @@ class _page1 extends State<Pages1> {
         .get();
 
     setState(() {
-      lenght = snapshot.docs.first['Transacciones '].length;
+      lenght = snapshot.docs.first['Transacciones '].length -1;
     });
 
     return lenght;
+
+  }
+  Future<String> getUserName() async {
+    print('testtt');
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: user?.uid)
+        .get();
+
+    setState(() {
+      name = snapshot.docs.first['name'] ;
+    });
+
+    return name;
 
   }
   @override
@@ -44,7 +58,7 @@ class _page1 extends State<Pages1> {
   @override
   void initState() {
     WidgetsBinding.instance ?.addPostFrameCallback((_) =>  getUserNameFromUID());
-
+    getUserName();
     super.initState();
   }
   
@@ -53,11 +67,12 @@ class _page1 extends State<Pages1> {
       children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(
-              "https://i.ibb.co/RQr3dZy/Logotipo-exported-Archivo-Logotipo-Pinchaaqui-2x-1-png.png" ),
+            "https://firebasestorage.googleapis.com/v0/b/wallet-76447.appspot.com/o/image_processing20211110-20985-1ovmyxv.png?alt=media&token=a789bcec-3fe1-4fab-8dbe-159c06a22ace",
+          ),
         ),
         SizedBox(width: 15),
         TitleText(text: "Hello,"),
-        Text(' Ismail,',
+        Text('${name}',
             style: GoogleFonts.mulish(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -81,7 +96,7 @@ class _page1 extends State<Pages1> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        _icon(Icons.transfer_within_a_station, "Transfer" , 0),
+        _icon(Icons.transfer_within_a_station, "Transfer M" , 0),
         _icon(Icons.phone, "Airtime" ,1),
         _icon(Icons.payment, "Pay Bills",2),
         _icon(Icons.code, "My Qr",3),
@@ -102,16 +117,32 @@ class _page1 extends State<Pages1> {
             if (index == 3){
              showDialog(context: context, builder: (context){
                return AlertDialog(
-
+                 shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(30),
+                 ),
 
                  title: BarcodeWidget(data:qr, barcode: Barcode.qrCode() ),
+                   actions: <Widget>[ Center(
+                     child: RaisedButton(
+               child: Text('Close'),
+               onPressed: () => {
+               Navigator.of(context).pop()
+               },
+               color: Colors.blue,
+               textColor: Colors.white,
+               shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10)),
+               ),
+                   ),]
                );
              });
           }
             if(index==1) {
               _callNumber();
             }
-
+            if(index==0) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => manual()));
+            }
           },
           child: Container(
             height: 80,
@@ -150,7 +181,7 @@ class _page1 extends State<Pages1> {
                 shrinkWrap: true,
                 itemCount:  lenght,
                 itemBuilder: (context,index){
-  //
+
                   return FutureBuilder<DocumentSnapshot>(
                       future: users.doc(user?.uid).get(),
                       builder:
@@ -158,10 +189,13 @@ class _page1 extends State<Pages1> {
                            if (snapshot.hasError) {
                                 return Text("Something went wrong");
                               }
+
                   if (snapshot.connectionState == ConnectionState.done) {
                     Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   List<dynamic>  subtitles = data["Transacciones "];
-                   return _transection('${subtitles[index]}', 'hola');
+                  List<dynamic>  subtitles_desc = data["Desc"];
+                    List<dynamic>  subtitles_fecha = data["Fecha"];
+                   return _transection('${subtitles_desc[index+1]}', '${subtitles_fecha[index+1]}','${subtitles[index+1]}',);
 
                   }
                   return  Center(
@@ -176,7 +210,7 @@ class _page1 extends State<Pages1> {
       );
   }
 
-  Widget _transection(String text, String time) {
+  Widget _transection(String text, String time,String money) {
     return ListTile(
       leading: Container(
         height: 50,
@@ -201,7 +235,7 @@ class _page1 extends State<Pages1> {
             color: LightColor.lightGrey,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          child: Text('-22 MLR',
+          child: Text(money + " EUR",
               style: GoogleFonts.mulish(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,

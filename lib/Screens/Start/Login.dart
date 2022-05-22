@@ -1,23 +1,19 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login_11/Screens/page1.dart';
 import 'package:login_11/Screens/pages2.dart';
-import 'package:login_11/Screens/signup.dart';
-
+import 'package:login_11/Screens/Start/Signup.dart';
 class LoginWidget extends StatefulWidget {
   @override
   LoginPage createState() =>LoginPage();
 }
-
-
 class LoginPage extends State<LoginWidget> {
-
   @override
   final EmailmyController = TextEditingController();
   final PasswordController = TextEditingController();
-  void dispose(){
+
+  void dispose() {
     EmailmyController.dispose();
     PasswordController.dispose();
     super.dispose();
@@ -43,7 +39,10 @@ class LoginPage extends State<LoginWidget> {
         ),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,12 +53,13 @@ class LoginPage extends State<LoginWidget> {
                 Column(
                   children: <Widget>[
                     Text("Login",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                      style: TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),),
                     SizedBox(height: 20,),
                     Text("Login to your account",
                       style: TextStyle(
                           fontSize: 15,
-                          color:Colors.grey[700]),)
+                          color: Colors.grey[700]),)
                   ],
                 ),
                 Padding(
@@ -70,7 +70,8 @@ class LoginPage extends State<LoginWidget> {
                       TextField(
                         controller: EmailmyController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 2),
                           prefixIcon: Icon(Icons.account_box_outlined),
                           border: OutlineInputBorder(),
                           hintText: 'Email',
@@ -84,7 +85,8 @@ class LoginPage extends State<LoginWidget> {
                         autocorrect: false,
                         controller: PasswordController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 2),
                           prefixIcon: Icon(Icons.password),
                           border: OutlineInputBorder(),
                           hintText: 'Password',
@@ -110,14 +112,12 @@ class LoginPage extends State<LoginWidget> {
                         )
 
 
-
                     ),
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 50,
                       onPressed: () {
                         signIn();
-
                       },
                       color: Color(0xff0095FF),
                       elevation: 0,
@@ -140,7 +140,8 @@ class LoginPage extends State<LoginWidget> {
                 InkWell(
                   //pressioned
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupPageWidget()));
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => SignupPageWidget()));
                   },
                   child: Column(
                     children: [
@@ -176,66 +177,100 @@ class LoginPage extends State<LoginWidget> {
         ),
       ),
     );
-
-
-
   }
+//ALert Diaglog
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: EmailmyController.text.trim(), password: PasswordController.text.trim());
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (BuildContext context) => Pages_2()));
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: EmailmyController.text.trim(),
+          password: PasswordController.text.trim());
+      FirebaseAuth.instance
+          .authStateChanges()
+          .listen((User? user) {
+        if (user == null) {
+          print('User is currently signed out!');
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => Pages_2()));
+        }
+      });
+    }
+    on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        checkConnection(1);
+      } else if (e.code == 'wrong-password') {
+        checkConnection(2);
       }
-    });
+    }
+  }
+//------------------------------------------------
+  checkConnection(int i  ) async {
+    if(i==1) {
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        title: 'User not found',
+        desc: 'No user found for that email.',
+        btnOkColor: Color(0xff0095FF),
+        btnOkOnPress: () {},
+      )
+        ..show();
+    }
+    else{
+      return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        btnOkColor: Color(0xff0095FF),
+        title: 'Wrong password',
+        desc: 'Wrong password provided for that user.',
+
+        btnOkOnPress: () {
+        },
+      )..show();
+    }
+
+
 
 
 
   }
-}
+  Widget inputFile({label, obscureText = false, controller}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
+          ),
 
-
-// we will be creating a widget for text field
-Widget inputFile({label, obscureText = false, controller})
-{
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color:Colors.black87
         ),
+        SizedBox(
+          height: 5,
+        ),
+        TextField(
+          obscureText: obscureText,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0,
+                  horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Colors.grey[400]!
+                ),
 
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0,
-                horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Colors.grey[400]!
               ),
-
-            ),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey[400]!)
-            )
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[400]!)
+              )
+          ),
         ),
-      ),
-      SizedBox(height: 10,)
-    ],
-  );
-
+        SizedBox(height: 10,)
+      ],
+    );
+  }
 }

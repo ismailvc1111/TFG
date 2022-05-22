@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../theme/light_color.dart';
+import '../Theme/light_color.dart';
 
 class BalanceCard extends StatefulWidget {
 

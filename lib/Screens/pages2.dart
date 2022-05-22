@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_11/Screens/routes.dart';
 
-import '../theme/light_color.dart';
-import '../widgets/balance_card.dart';
-import '../widgets/bottom_navigation_bar.dart';
-import '../widgets/title_text.dart';
-import 'HomePage.dart';
+import '../Theme/light_color.dart';
+import '../Widgets/balance_card.dart';
+import '../Widgets/bottom_navigation_bar.dart';
+import '../Widgets/title_text.dart';
+import 'Start/HomePage.dart';
 
 class Pages_2 extends StatefulWidget {
 

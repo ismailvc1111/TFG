@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/light_color.dart';
+import '../Theme/light_color.dart';
 
 class BottomNavigation extends StatelessWidget {
     int index = 0;

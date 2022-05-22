@@ -4,7 +4,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login_11/widgets/title_text.dart';
+import 'package:intl/intl.dart';
+import 'package:login_11/Widgets/title_text.dart';
 
 import '../page1.dart';
 import '../pages2.dart';
@@ -32,6 +33,9 @@ class _DetailsPageState extends State<DetailsPage> {
   //Descriptionoftransaction
   List<dynamic> setsDestino_Desc = [];
   List<dynamic> setsOrigen_Desc = [];
+  //Fechas
+  List<dynamic> setsDestino_Fechas = [];
+  List<dynamic> setsOrigen_Fechas = [];
   User? user =  FirebaseAuth.instance.currentUser;
 
   //---------------------------------------
@@ -255,15 +259,17 @@ class _DetailsPageState extends State<DetailsPage> {
         .doc('${user?.uid}');
    //----------------------Origin----------------------------------------
     if(await boolCheckDestino()==true){
-      ListTRansferD();
+           ListTRansferD();
      await ListTRansferO();
-      ListDescD();
-     await  ListDescO();
+           ListDescD();
+     await ListDescO();
+     await ListFechaO();
+     await ListFechaD();
     documentOrigin.get().then(( value) {
       totalOrigen= value['account'];
       users
           .doc('${user?.uid}')
-          .update({'account':totalOrigen - int. parse(_controllereuro.text.trim()), "Transacciones ": setsOrigen ,"Desc": setsOrigen_Desc})
+          .update({'account':totalOrigen - int. parse(_controllereuro.text.trim()), "Transacciones ": setsOrigen ,"Desc": setsOrigen_Desc,"Fecha": setsOrigen_Fechas})
 
           .then((value) => {
 
@@ -276,7 +282,7 @@ class _DetailsPageState extends State<DetailsPage> {
       totalDestino= value['account'];
       users
           .doc('1aI6vk825QRIkaJMhOz48IrhxHz2')
-          .update({'account':totalDestino + int.parse(_controllereuro.text.trim()), "Transacciones ": setsDestino,"Desc": setsDestino_Desc})
+          .update({'account':totalDestino + int.parse(_controllereuro.text.trim()), "Transacciones ": setsDestino,"Desc": setsDestino_Desc,"Fecha":setsDestino_Fechas})
           .then((value) => checkConnection(2))
           .catchError((error) => print("Failed to update user: $error"));
 
@@ -321,6 +327,33 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return setsOrigen_Desc;
   }
+  Future<List> ListFechaO() async {
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '${user?.uid}')
+        .get();
+    final now = new DateTime.now();
+    String formatter = DateFormat('yMd').format(now);
+    setsOrigen_Fechas= snapshot.docs.first['Fecha'];
+    setsOrigen_Fechas.add(formatter);
+
+    return setsOrigen_Fechas;
+  }
+  Future<List> ListFechaD() async {
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users2')
+        .where('uid', isEqualTo: '1aI6vk825QRIkaJMhOz48IrhxHz2')
+        .get();
+    final now = new DateTime.now();
+    String formatter = DateFormat('yMd').format(now);
+    setsDestino_Fechas= snapshot.docs.first['Fecha'];
+    setsDestino_Fechas.add(formatter);
+
+    return setsDestino_Fechas;
+  }
+  //----------------------------------------------------------------------------
  Future<bool> boolCheckDestino() async {
 
     final snapshotOrigen = await  FirebaseFirestore.instance
@@ -383,4 +416,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
 
 
-}}
+}
+
+}
