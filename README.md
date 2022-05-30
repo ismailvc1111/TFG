@@ -19,5 +19,5 @@ samples, guidance on mobile development, and a full API reference.
 ![image](https://github.com/ismailvc1111/TFG/blob/master/s1.png)
 ![image](https://github.com/ismailvc1111/TFG/blob/master/s2.png)
 ![image](https://github.com/ismailvc1111/TFG/blob/master/s4.png)
-![image](https://github.com/ismailvc1111/TFG/blob/master/s5.png)
-![image](https://github.com/ismailvc1111/TFG/blob/master/s6.png)
+![image](https://github.com/ismailvc1111/TFG/blob/master/s5.png) <br />
+![image](https://github.com/ismailvc1111/TFG/blob/master/s6.png) <br />
